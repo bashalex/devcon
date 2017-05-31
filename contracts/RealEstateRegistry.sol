@@ -53,35 +53,36 @@ contract RealEstateRegistry {
     uint256 lastEstateId = 0;
 
     /// @dev Constructor
-	function RealEstateRegistry() {
+	function RealEstateRegistry(string estate_name1, string estate_name2, string estate_name3,
+                              address owner1, address owner2, address owner3, address inspector) {
 	    estates[1] = Estate({
 	        id: 1,
-	        name: 'Test1',
-	        price: 1 finney,
+	        name: estate_name1,
+	        price: 10 ether,
 	        status: Status.Owned,
-	        owner: 0xaec3ae5d2be00bfc91597d7a1b2c43818d84396a,
+	        owner: owner1,
 	        potentialOwner: 0
 	    });
 	    
 	    estates[2] = Estate({
 	        id: 2,
-	        name: 'Test2',
-	        price: 2 finney,
+	        name: estate_name2,
+	        price: 18 ether,
 	        status: Status.Sale,
-	        owner: 0xaec3ae5d2be00bfc91597d7a1b2c43818d84396a,
+	        owner: owner2,
 	        potentialOwner: 0
 	    });
 	    
 	    estates[3] = Estate({
 	        id: 3,
-	        name: 'Test3',
-	        price: 3 finney,
+	        name: estate_name3,
+	        price: 12 ether,
 	        status: Status.WaitConfirmation,
-	        owner: 0xaec3ae5d2be00bfc91597d7a1b2c43818d84396a,
-	        potentialOwner: 0
+	        owner: owner3,
+	        potentialOwner: owner1
 	    });
 	    
-	    escrows[0xf1f42f995046e67b79dd5ebafd224ce964740da3] = true;
+	    escrows[inspector] = true;
 	    
 	    lastEstateId = 3;
   	}
@@ -105,7 +106,7 @@ contract RealEstateRegistry {
   	     estates[estateId].status = Status.Sale;
   	}
   	
-  	function buy(uint256 estateId) {
+  	function buy(uint256 estateId) payable {
   	    if (estates[estateId].status != Status.Sale) throw;
   	    estates[estateId].potentialOwner = msg.sender;
   	    estates[estateId].status = Status.WaitConfirmation;
