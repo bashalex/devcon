@@ -148,7 +148,8 @@ We've noticed that some of the tests do not work. The problem
 that we do not really send any money from buyer to seller. Let's fix it!
 
 We need to implement the following:
-  - take money from buyer when he calls `buy` function (Take amount which is equal to apartment price)
+  - send money (ethers) with `buy` function call
+  - validate that buyer sent correct amount (equal to appartment price)
   - send 95% of the price to the seller when inspector confirms the deal
   - send 5% to inspector as a fee
  
