@@ -60,7 +60,9 @@
   - Go to the Lab directory
       -  `cd ~/devcon`
   - Install Truffle & TestRpc
-      - `sudo -H npm  install -g`
+      - `sudo -H npm  install -g truffle`
+      - `sudo -H npm  install -g truffle-default-builder`
+      - `sudo -H npm  install -g ethereumjs-testrpc`
   - Check that `testRPC` works
       - `./run_testrpc.sh`
       - You should see the following:
