@@ -3,13 +3,12 @@
 
 ### Preparing Infrastructure
 1. Get Azure Pass
-2. Redeeming a Microsoft Azure Pass
-1. Instruction https://www.microsoftazurepass.com/Home/HowTo
+  - Instruction https://www.microsoftazurepass.com/Home/HowTo
 3. Create a Linux virtual machine with the Azure portal
   - Log in to Azure http://portal.azure.com
   - Create Virtual Machine
       - Click the New button found on the upper left-hand corner of the Azure portal.
-      - Select `Compute`, select `Ubuntu Server 16.04 LTS`, and ensure that Resource Manager is the selected deployment model.
+      - Select `Compute`, select `Ubuntu Server 16.04 LTS`, and ensure that `Resource Manager` is the selected deployment model.
       - Click the `Create` button.
       - Enter the virtual machine information
         - VM disk type 
@@ -143,7 +142,7 @@ uint256 amountToSend = 10 ether;
 guy1.send(amountToSend);
 ```
 
-We've noticed that some of the tests to not work. The problem
+We've noticed that some of the tests do not work. The problem
 that we do not really send any money from buyer to seller. Let's fix it!
 
 We need to implement the following:
