@@ -10,7 +10,13 @@ contract('RealEstateRegistry', function(accounts) {
     var initialSellerBalance = web3.fromWei(web3.eth.getBalance(seller)).toNumber();
     var initialInspectorBalance = web3.fromWei(web3.eth.getBalance(inspector)).toNumber();
 
+    console.log('Initial buyer balance:', initialBuyerBalance);
+    console.log('Initial seller balance:', initialSellerBalance);
+    console.log('Initial inspector balance:', initialInspectorBalance);
+
     var appartmentPrice = web3.toWei(15, "Ether");
+
+    console.log('Appartment price:', web3.fromWei(appartmentPrice), 'ETH');
 
     var status = {0: 'Owned', 1: 'On Sale', 2: 'Wait Confirmation'};
 
@@ -77,8 +83,8 @@ contract('RealEstateRegistry', function(accounts) {
     });
 
     it("Should check that inspector received appropriate amount of money", function(done) {
-        var balance = web3.fromWei(web3.eth.getBalance(seller)).toNumber();
-        assert.approximately(balance, initialInspectorBalance + web3.fromWei(appartmentPrice) * 0.05, 0.02 'Inspector didn\'t received appropriate amount of money');
+        var balance = web3.fromWei(web3.eth.getBalance(inspector)).toNumber();
+        assert.approximately(balance, initialInspectorBalance + web3.fromWei(appartmentPrice) * 0.05, 0.02, 'Inspector didn\'t received appropriate amount of money');
         done();
     });
 

@@ -114,6 +114,7 @@ contract RealEstateRegistry {
   	
   	function confirm(uint256 estateId) onlyEscrow {
   	    if (estates[estateId].status != Status.WaitConfirmation) throw;
+        uint256 percent = estates[estateId].price / 100;
   	    estates[estateId].owner = estates[estateId].potentialOwner;
   	    estates[estateId].potentialOwner = 0;
   	    estates[estateId].status = Status.Owned;
