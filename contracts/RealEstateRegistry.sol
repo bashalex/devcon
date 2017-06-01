@@ -4,12 +4,12 @@ pragma solidity ^0.4.6;
 /// @title Real Estate Registry Contract
 contract RealEstateRegistry {
     
-    /*
+        /*
 	* Events
 	*/
 	event Purchase(uint256 id, uint256 price);
 	
-	/*
+     /*
      * Modifiers
      */
     
