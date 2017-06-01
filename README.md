@@ -77,7 +77,8 @@
       - `cat RealEstateRegistry.sol`
       - Copy & Past code of Smart Contract
   - Open Remix, Visual Studio Code or another IDE
-      - Paste the code of Smart-Contract for overview 
+      - Paste the code of Smart-Contract for overview
+  - https://ethereum.github.io/browser-solidity/#version=soljson-v0.4.11+commit.68ef5810.js&optimize=undefined&gist=2eac7653efed9b7f658218a449452baa
 
 ### Understating EVM via using in Node
   - `cd ~/devcon`
