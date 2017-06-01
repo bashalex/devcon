@@ -2,6 +2,7 @@ var accounts;
 var bob, ronald, john;
 var contract;
 
+// for testrpc accounts only
 var guys = {'0xaec3ae5d2be00bfc91597d7a1b2c43818d84396a': 'Bob (Seller)',
             '0x04411d87358baa12435da46b34e8d65f142bb47b': 'John (Buyer)',
             '0xf1f42f995046e67b79dd5ebafd224ce964740da3': 'Ronald (Inspector)'}
@@ -35,7 +36,7 @@ function onContractLoaded() {
                     contract.sell(idx, web3.toWei(10, 'Ether'), { from: bob }).then(updateStatus);
                 } else if (e.target.innerHTML.includes('Buy')) {
                     console.log('Bob wants to buy ' + idx);
-                    contract.buy(idx, { from: bob, value: web3.toWei(10, 'Ether') }).then(updateStatus);
+                    contract.buy(idx, { from: bob }).then(updateStatus);
                 }
             }
         })();
@@ -47,7 +48,7 @@ function onContractLoaded() {
                     contract.sell(idx, web3.toWei(10, 'Ether'), { from: john }).then(updateStatus);
                 } else if (e.target.innerHTML.includes('Buy')) {
                     console.log('John wants to buy ' + idx);
-                    contract.buy(idx, { from: john, value: web3.toWei(10, 'Ether') }).then(updateStatus);
+                    contract.buy(idx, { from: john }).then(updateStatus);
                 }
             }
         })();
@@ -59,7 +60,7 @@ function onContractLoaded() {
                     contract.sell(idx, web3.toWei(10, 'Ether'), { from: ronald }).then(updateStatus);
                 } else if (e.target.innerHTML.includes('Buy')) {
                     console.log('Ronald wants to buy ' + idx);
-                    contract.buy(idx, { from: ronald, value: web3.toWei(10, 'Ether') }).then(updateStatus);
+                    contract.buy(idx, { from: ronald }).then(updateStatus);
                 } else if (e.target.innerHTML.includes('Confirm')) {
                     console.log('Ronald wants to confirm ' + idx);
                     contract.confirm(idx, { from: ronald }).then(updateStatus);
@@ -76,60 +77,96 @@ function updateStatus() {
         contract.getEstate.call(i).then(function(estate) {
             var idx = estate[0];
             document.getElementById("name" + idx).innerHTML = estate[1];
-            document.getElementById("owner" + idx).innerHTML = guys[estate[4]];
+            if (guys[estate[4]] != null) {
+                document.getElementById("owner" + idx).innerHTML = guys[estate[4]];
+            } else {
+                document.getElementById("owner" + idx).innerHTML = estate[4].substring(0, 16) + '...';
+            }
             document.getElementById("price" + idx).innerHTML =  web3.fromWei(estate[2]) + ' ETH';
             document.getElementById("status" + idx).innerHTML = statuses[estate[3]];
             if (estate[3] == 0) {  // Owned
-                console.log(0, estate[4]);
                 switch (estate[4]) {
-                    case '0xaec3ae5d2be00bfc91597d7a1b2c43818d84396a':
+                    case bob:
                         btns1[idx-1].style.display = 'inline';
                         btns2[idx-1].style.display = 'none';
                         btns3[idx-1].style.display = 'none';
                         btns1[idx-1].innerHTML = 'Sell ' + estate[1];
                         break;
-                    case '0x04411d87358baa12435da46b34e8d65f142bb47b':
-                        btns2[idx-1].style.display = 'inline';
+                    case john:
+                        if (john != null) {
+                            btns2[idx-1].innerHTML = 'Sell ' + estate[1];
+                            btns2[idx-1].style.display = 'inline';
+                        } else {
+                            btns2[idx-1].style.display = 'none';
+                        }
                         btns1[idx-1].style.display = 'none';
                         btns3[idx-1].style.display = 'none';
-                        btns2[idx-1].innerHTML = 'Sell ' + estate[1];
                         break;
-                    case '0xf1f42f995046e67b79dd5ebafd224ce964740da3':
-                        btns3[idx-1].style.display = 'inline';
+                    case ronald:
                         btns2[idx-1].style.display = 'none';
                         btns1[idx-1].style.display = 'none';
-                        btns3[idx-1].innerHTML = 'Sell ' + estate[1];
+                        if (ronald != null) {
+                            btns3[idx-1].innerHTML = 'Sell ' + estate[1];
+                            btns3[idx-1].style.display = 'inline';
+                        } else {
+                            btns3[idx-1].style.display = 'none';
+                        }
                         break;
+                    default:
+                        btns3[idx-1].style.display = 'none';
+                        btns2[idx-1].style.display = 'none';
+                        btns1[idx-1].style.display = 'none';
                 }
             } else if (estate[3] == 1) {  // On Sale
                 switch (estate[4]) {
-                    case '0xaec3ae5d2be00bfc91597d7a1b2c43818d84396a':
-                        btns2[idx-1].innerHTML = 'Buy ' + estate[1];
-                        btns3[idx-1].innerHTML = 'Buy ' + estate[1];
-                        btns3[idx-1].style.display = 'inline';
-                        btns2[idx-1].style.display = 'inline';
+                    case bob:
                         btns1[idx-1].style.display = 'none';
+                        if (john != null) {
+                            btns2[idx-1].innerHTML = 'Buy ' + estate[1];
+                            btns2[idx-1].style.display = 'inline';
+                        } else {
+                            btns2[idx-1].style.display = 'none';
+                        }
+                        if (ronald != null) {
+                            btns3[idx-1].innerHTML = 'Buy ' + estate[1];
+                            btns3[idx-1].style.display = 'inline';
+                        } else {
+                            btns3[idx-1].style.display = 'none';
+                        }
                         break;
-                    case '0x04411d87358baa12435da46b34e8d65f142bb47b':
+                    case john:
                         btns1[idx-1].innerHTML = 'Buy ' + estate[1];
-                        btns3[idx-1].innerHTML = 'Buy ' + estate[1];
-                        btns3[idx-1].style.display = 'inline';
-                        btns2[idx-1].style.display = 'none';
                         btns1[idx-1].style.display = 'inline';
+                        btns2[idx-1].style.display = 'none';
+                        if (ronald != null) {
+                            btns3[idx-1].innerHTML = 'Buy ' + estate[1];
+                            btns3[idx-1].style.display = 'inline';
+                        } else {
+                            btns3[idx-1].style.display = 'none';
+                        }
                         break;
-                    case '0xf1f42f995046e67b79dd5ebafd224ce964740da3':
+                    case ronald:
                         btns1[idx-1].innerHTML = 'Buy ' + estate[1];
                         btns2[idx-1].innerHTML = 'Buy ' + estate[1];
                         btns1[idx-1].style.display = 'inline';
                         btns2[idx-1].style.display = 'inline';
                         btns3[idx-1].style.display = 'none';
                         break;
+                    default:
+                        btns1[idx-1].innerHTML = 'Buy ' + estate[1];
+                        btns1[idx-1].style.display = 'inline';
+                        btns2[idx-1].style.display = 'none';
+                        btns3[idx-1].style.display = 'none';
                 }
             } else if (estate[3] == 2) {  // Await Confirmation
-                btns3[idx-1].style.display = 'inline';
+                if (ronald != null) {
+                    btns3[idx-1].innerHTML = 'Confirm the ' + estate[0] + ' Deal';
+                    btns3[idx-1].style.display = 'inline';
+                } else {
+                    btns3[idx-1].style.display = 'none';
+                }
                 btns2[idx-1].style.display = 'none';
                 btns1[idx-1].style.display = 'none';
-                btns3[idx-1].innerHTML = 'Confirm the ' + estate[0] + ' Deal';
             }
         });
     }
@@ -151,6 +188,11 @@ window.onload = function() {
         bob = accounts[0];
         ronald = accounts[1];
         john = accounts[2]
+
+        if (accounts[0].toUpperCase() == '0x2DC36fC658ae9bBA5F6a5caC76f8076452798F36'.toUpperCase()) {
+            ronald = accounts[0];
+        }
+
         console.log('Bob:' + bob);
         console.log('Ronald:' + ronald);
         console.log('John:' + john);
