@@ -149,11 +149,17 @@ that we do not really send any money from buyer to seller. Let's fix it!
 
 We need to implement the following:
   - send money (ethers) with `buy` function call
-  - validate that buyer sent correct amount (equal to appartment price)
+  - validate that buyer sent correct amount (equal to apartment price)
   - send 95% of the price to the seller when inspector confirms the deal
   - send 5% to inspector as a fee
  
 Make sure that all tests work now!
+
+To copy code from local machine to the VM:
+```
+scp "path/to/the/file/RealEstateRegistry.sol" USERNAME@IP:~/devcon/contracts/RealEstateRegistry.sol
+```
+To edit code right on the serve use `nano` or `vim`
 
 ### Deploy to public test network (kovan)
   - `cd ~/devcon`
@@ -169,3 +175,6 @@ Make sure that all tests work now!
   - `trufle serve`
   - open `AZURE_VM_IP:8080` in your browser
  
+### Additional tools
+  - Install Metamask (Google Chrome only plugin)
+  - https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn
