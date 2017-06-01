@@ -155,6 +155,12 @@ We need to implement the following:
  
 Make sure that all tests work now!
 
+To copy code from local machine to the VM:
+```
+scp "path/to/the/file/RealEstateRegistry.sol" USERNAME@IP:~/devcon/contracts/RealEstateRegistry.sol
+```
+To edit code right on the serve use `nano` or `vim`
+
 ### Deploy to public test network (kovan)
   - `cd ~/devcon`
   - `rm -r build`
