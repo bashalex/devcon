@@ -175,3 +175,6 @@ To edit code right on the serve use `nano` or `vim`
   - `trufle serve`
   - open `AZURE_VM_IP:8080` in your browser
  
+### Additional tools
+  - Install Metamask (Google Chrome only plugin)
+  - https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn
