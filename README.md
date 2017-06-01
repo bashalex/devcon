@@ -149,7 +149,7 @@ that we do not really send any money from buyer to seller. Let's fix it!
 
 We need to implement the following:
   - send money (ethers) with `buy` function call
-  - validate that buyer sent correct amount (equal to appartment price)
+  - validate that buyer sent correct amount (equal to apartment price)
   - send 95% of the price to the seller when inspector confirms the deal
   - send 5% to inspector as a fee
  
